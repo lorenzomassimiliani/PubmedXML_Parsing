@@ -1,0 +1,236 @@
+#Create Table Articles
+String sql =    "CREATE TABLE Articles(" +
+                "PMID Varchar PRIMARY KEY NOT NULL, " +
+                "Version Varchar NOT NULL," +
+                "Title Varchar NOT NULL," +
+                "VernacularTitle Varchar," +
+                "Status Varchar NOT NULL," +
+                "Owner Varchar," +
+                "PubModelFormat Varchar NOT NULL," +
+                "Abstract Varchar, " +
+                "AbstractCopyright Varchar," +
+                "Pagination Varchar," +
+                "Language Varchar," +
+                "DateCompleted Varchar," +
+                "DateRevised Varchar, " +
+                "DOI Varchar, " +
+                "Journal INT NOT NULL, " +
+                "ElectronicVersionDate Timestamp, " +
+                "Retracted Boolean, " +
+                "DateRemoval Timestamp, " +
+                "OtherAbstract Varchar, " +
+                "OtherAbstractInfo Varchar, " +
+                "Note Varchar, " +
+                "CoiStatement Varchar " +
+                ");";
+
+
+#Create Table Journals
+String sql =    "CREATE TABLE Journals(" +
+                "JournalID INT PRIMARY KEY NOT NULL, " +
+                "ISSN Varchar NOT NULL," +
+                "Title Varchar," +
+                "IssnType Varchar NOT NULL," +
+                "Volume Varchar, " +
+                "Issue Int," +
+                "PubDate Varchar," +
+                "ISOAbbreviation Varchar," +
+                "MedlineAbbreviation Varchar NOT NULL," +
+                "County Varchar," +
+                "NImUniqueId Varchar," +
+                "IssnLinking Varchar" +
+                ");";
+
+#PublicationType_Article
+String sql = "CREATE TABLE PublicationType_Article(" +
+                "PtypeID INT NOT NULL, " +
+                "PMID Varchar NOT NULL, " +
+                " UNIQUE(PtypeID, PMID) );";
+
+
+#PublicationType
+String sql = "CREATE TABLE PublicationType(" +
+                "PtypeID INT PRIMARY KEY NOT NULL, " +
+                "NAME Varchar NOT NULL, " +
+                "UI VArchar NOT NULL );";
+
+#History
+String sql = "CREATE TABLE History(" +
+                "HistoryID INT PRIMARY KEY NOT NULL, " +
+                "PubDate Varchar NOT NULL, " +
+                "PubStatus Varchar NOT NULL, " +
+                "PMID Varchar NOT NULL );";
+
+
+#Space Flight Mission
+String sql = "CREATE TABLE SpaceFlightMission(" +
+                "SpaceFlightID INT PRIMARY KEY NOT NULL, " +
+                "SpaceFlightMission Varchar, " +
+                "PMID Varchar NOT NULL );";
+
+
+#OtherID
+String sql = "CREATE TABLE OtherID(" +
+                "OtherID INT PRIMARY KEY NOT NULL, " +
+                "Type Varchar NOT NULL, " +
+                "PMID Varchar NOT NULL );";
+
+
+#Comment_Article
+String sql = "CREATE TABLE Comment_Article(" +
+                "CommentID Int NOT NULL, " +
+                "PMID Varchar NOT NULL );";
+
+
+#Comment
+String sql = "CREATE TABLE Comment(" +
+                "CommentID Int PRIMARY KEY NOT NULL, " +
+                "RefSource Varchar NOT NULL, " +
+                "PMIDCited Varchar," +
+                "Note Varchar," +
+                "PMID Varchar NOT NULL );";
+
+
+#Reference_Article
+String sql = "CREATE TABLE Reference_Article(" +
+                "ReferenceID Int NOT NULL, " +
+                "PMID Varchar NOT NULL );";
+
+
+#References
+String sql = "CREATE TABLE ReferencesT ( " +
+                "ReferenceID Int PRIMARY KEY NOT NULL, " +
+                "Type Varchar NOT NULL, " +
+                "Citation Varchar NOT NULL, " +
+                "CitationID Varchar NOT NULL );";
+
+
+#Chemicals_Article
+String sql = "CREATE TABLE Chemicals_Article(" +
+                "ChemicalID Int NOT NULL, " +
+                "PMID Varchar NOT NULL );";
+
+
+
+#Grants_Article
+String sql = "CREATE TABLE Grants_Article(" +
+                "GrantID Int NOT NULL, " +
+                "PMID Varchar NOT NULL );";
+
+
+#Keyworks_Article
+String sql = "CREATE TABLE Keyworks_Article(" +
+                "KeywordID Int NOT NULL, " +
+                "MajorTopic Varchar NOT NULL, " +
+                "PMID Varchar NOT NULL );";
+
+#Mesh_Article
+String sql = "CREATE TABLE Mesh_Article(" +
+                "MeshID Int NOT NULL, " +
+                "MajorTopic Varchar NOT NULL, " +
+                "PMID Varchar NOT NULL );";
+
+
+#Databanks_Article
+String sql = "CREATE TABLE Databanks_Article(" +
+                "DataBankID Int NOT NULL, " +
+                "PMID Varchar NOT NULL );";
+
+
+#Genesysbol_Article
+String sql = "CREATE TABLE Genesysbol_Article(" +
+                "GenesysbolID Int NOT NULL, " +
+                "PMID Varchar NOT NULL );";
+
+#SupplMesh_Article
+String sql = "CREATE TABLE SupplMesh_Article(" +
+                "SupplMeshID Int NOT NULL, " +
+                "PMID Varchar NOT NULL );";
+
+
+#Chemicals
+ String sql = "CREATE TABLE Chemicals (" +
+                "ChemicalID Int PRIMARY KEY NOT NULL, " +
+                "RegistryNumber Varchar NOT NULL, " +
+                "Substance Varchar NOT NULL, " +
+                "SubstanceUI Varchar NOT NULL) ;";
+
+#Grants
+ String sql = "CREATE TABLE Grants (" +
+                "GrantID Int PRIMARY KEY NOT NULL, " +
+                "Agency Varchar NOT NULL, " +
+                "Acronym Varchar, " +
+                "Country Varchar NOT NULL, " +
+                "Identifier Varchar) ;";
+
+#Keywords
+String sql = "CREATE TABLE Keywords (" +
+                "KeywordID Int PRIMARY KEY NOT NULL, " +
+                "Keyword Varchar NOT NULL, " +
+                "Owner Varchar) ;" ;
+
+#Mesh
+String sql = "CREATE TABLE Mesh (" +
+                "MeshID Int PRIMARY KEY NOT NULL, " +
+                "Descriptor Varchar NOT NULL, " +
+                "DescriptorUI Varchar NOT NULL, " +
+                "QualifierUI Varchar, " +
+                "Qualifier Varchar) ;";
+
+#Databanks
+String sql = "CREATE TABLE Databanks (" +
+                "DatabankID Int PRIMARY KEY NOT NULL, " +
+                "Name Varchar NOT NULL, " +
+                "AccessionNumbers Varchar) ;";
+
+#Genesymbol
+String sql = "CREATE TABLE Genesymbol (" +
+                "GenesymbolID Int PRIMARY KEY NOT NULL, " +
+                "Symbol Varchar NOT NULL) ;";
+
+#SupplMesh
+String sql = "CREATE TABLE SupplMesh (" +
+                "SupplMeshID Int PRIMARY KEY NOT NULL, " +
+                "Type Varchar NOT NULL, " +
+                "UI Varchar NOT NULL, " +
+                "Value Varchar NOT NULL) ;";
+
+
+#Person_Interaction
+String sql = "CREATE TABLE Person_Interaction (" +
+                "PMID Varchar NOT NULL, " +
+                "Role Varchar NOT NULL, " +
+                "Title Varchar NOT NULL, " +
+                "PersonID INT NOT NULL) ;";
+
+
+#Person
+String sql = "CREATE TABLE Person (" +
+                "PersonID INT PRIMARY KEY, " +
+                "LastName Varchar, " +
+                "ForeName Varchar, " +
+                "Initial Varchar, " +
+                "Orcid Varchar, " +
+                "NameValid Boolean NOT NULL, " +
+                "AffiliationID INT); ";
+
+#Affiliation
+String sql = "CREATE TABLE Affiliation (" +
+                "AffiliationID INT PRIMARY KEY NOT NULL, " +
+                "AffiliationText Varchar NOT NULL);";
+
+
+#UMLS_Articles
+String sql = "CREATE TABLE UMLS_Articles (" +
+                "PMID Varchar NOT NULL, " +
+                "UMLSID Int NOT NULL, " +
+                "Score Int, " +
+                "Position Int); ";
+
+
+#UMLS
+String sql = "CREATE TABLE UMLS (" +
+                "UMLSID INT PRIMARY KEY NOT NULL, " +
+                "ConceptPreferredName Varchar, " +
+                "ConceptUniqueIdentifier Varchar, " +
+                "SemanticType Varchar); ";
