@@ -14,7 +14,7 @@ String sql =    "CREATE TABLE Articles(" +
                 "DateCompleted Varchar," +
                 "DateRevised Varchar, " +
                 "DOI Varchar, " +
-                "Journal INT NOT NULL, " +
+                "Journal Varchar NOT NULL, " +
                 "ElectronicVersionDate Timestamp, " +
                 "Retracted Boolean, " +
                 "DateRemoval Timestamp, " +
@@ -27,7 +27,7 @@ String sql =    "CREATE TABLE Articles(" +
 
 #Create Table Journals
 String sql =    "CREATE TABLE Journals(" +
-                "JournalID INT PRIMARY KEY NOT NULL, " +
+                "JournalID Varchar PRIMARY KEY NOT NULL, " +
                 "ISSN Varchar NOT NULL," +
                 "Title Varchar," +
                 "IssnType Varchar NOT NULL," +
@@ -225,7 +225,7 @@ String sql = "CREATE TABLE UMLS_Articles (" +
                 "PMID Varchar NOT NULL, " +
                 "UMLSID Int NOT NULL, " +
                 "Score Int, " +
-                "Position Int); ";
+                "Position Varchar); ";
 
 
 #UMLS
