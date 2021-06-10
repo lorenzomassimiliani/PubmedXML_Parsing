@@ -83,10 +83,12 @@ class UserHandler extends DefaultHandler {
         }
         switch (qName) {
             case "LastName":
-                elementTag = "LastName";
+                if (author!=null)
+                    elementTag = "LastName";
                 return;
             case "Initials":
-                elementTag = "Initials";
+                if (author!=null)
+                    elementTag = "Initials";
                 return;
             default:
                 elementTag = "";
@@ -142,6 +144,7 @@ class UserHandler extends DefaultHandler {
 
             //authors parsing
             case "LastName":
+                author = new Author();
                 author.setLastName(content);
                 return;
             case "Initials":
