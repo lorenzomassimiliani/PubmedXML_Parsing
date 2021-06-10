@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import Tables.Article;
 import Tables.Author;
@@ -13,7 +15,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 class UserHandler extends DefaultHandler {
     private final List<Article> articles = new ArrayList<>();
-    private final List<Journal> journals = new ArrayList<>();
+    private Map<String, Journal> journals = new HashMap <String, Journal>();
     private final List<Author> authors = new ArrayList<>();
     private final List<Author_Interaction> author_interactions = new ArrayList<>();
     private Article article = null;
@@ -22,7 +24,8 @@ class UserHandler extends DefaultHandler {
     private Author_Interaction author_interaction = null;
     private int IDauthor = 1;
     private String CurrentPMID = null;
-    String elementTag = "";
+    private String elementTag = "";
+    private Boolean Skip = false;
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes)  throws SAXException {
@@ -31,6 +34,10 @@ class UserHandler extends DefaultHandler {
             article = new Article();
             journal = new Journal();
             return;
+        }
+
+        if(qName.equals("CommentsCorrections")) {
+            Skip = true;
         }
 
         // Articles parsing
@@ -74,7 +81,6 @@ class UserHandler extends DefaultHandler {
 
         }
 
-
         //authors parsing
         if (qName.equals("Author")) {
             author = new Author();
@@ -104,6 +110,10 @@ class UserHandler extends DefaultHandler {
     @Override
     public void characters(char ch[], int start, int length) throws SAXException {
         String content = new String(ch, start, length);
+
+        if(Skip) {
+            return;
+        }
 
         //articles parsing
         switch (elementTag){
@@ -156,42 +166,49 @@ class UserHandler extends DefaultHandler {
 
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
-            if(qName.equals("PubmedArticle")) {
-                articles.add(article);
-                article = null;
-                journals.add(journal);
-                journal = null;
+
+        if(qName.equals("CommentsCorrections")) {
+            Skip = false;
+        }
+
+        if(qName.equals("PubmedArticle")) {
+            articles.add(article);
+            article = null;
+            if(journal.getJournalID()  == null) {
+                journal.setJournalID("FAKE-" + journal.getTitle() + journal.getVolume() + journal.getIssue());
             }
-
-            if(qName.equals("Author")) {
-                author.setAuthorID(IDauthor);
-
-                //author_inìteractions parsing
-                author_interaction.setRole("Author");
-                author_interaction.setPMID(CurrentPMID);
-                author_interaction.setAuthorID(IDauthor);
-                author_interactions.add(author_interaction);
-                author_interaction = null;
-
-                IDauthor ++;
-                authors.add(author);
-                author = null;
+            if(!journals.containsKey(journal.getJournalID())) {
+                journals.put(journal.getJournalID(), journal);
             }
+            journal = null;
+        }
+
+        if(qName.equals("Author")) {
+            author.setAuthorID(IDauthor);
+
+            //author_inìteractions parsing
+            author_interaction.setRole("Author");
+            author_interaction.setPMID(CurrentPMID);
+            author_interaction.setAuthorID(IDauthor);
+            author_interactions.add(author_interaction);
+            author_interaction = null;
+
+            IDauthor ++;
+            authors.add(author);
+            author = null;
+        }
     }
 
 
     List<Article> getArticles() {
         return articles;
     }
-
     List <Journal> getJournals() {
-        return  journals;
+        return  journals.values().stream().toList();
     }
-
     List <Author> getAuthors() {
         return  authors;
     }
-
     List <Author_Interaction> getAuthor_interactions() {
         return  author_interactions;
     }

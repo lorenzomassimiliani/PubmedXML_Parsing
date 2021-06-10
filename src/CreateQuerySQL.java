@@ -25,15 +25,6 @@ public class CreateQuerySQL {
 
             List<Article> articles = userhandler.getArticles();
             Article aa = new Article();
-            for (Article bb:articles) {
-
-                if (bb.getPMID().equals("11200"))
-                {
-                  aa = bb;
-                }
-
-
-            }
 
             for (Article article : articles) {
                 String sql ="insert into Table Article (pmid, Title, Abstract, Pagination, Language, DOI, JournalID) values " +
