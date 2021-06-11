@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import Tables.Article;
 import Tables.Author;
 import Tables.Author_Interaction;
@@ -64,6 +63,7 @@ class UserHandler extends DefaultHandler {
 
         if (qName.equals("ArticleId") && attributes.getLength() > 0 && attributes.getValue("IdType").equals("doi")) {
             elementTag = "doi";
+
         }
 
 
@@ -78,7 +78,6 @@ class UserHandler extends DefaultHandler {
             case "Issue":
                 elementTag = "Issue";
                 return;
-
         }
 
         //authors parsing
@@ -97,7 +96,9 @@ class UserHandler extends DefaultHandler {
                     elementTag = "Initials";
                 return;
             default:
-                elementTag = "";
+                if(elementTag!="doi") {
+                    elementTag = "";
+                }
                 return;
         }
 
@@ -192,7 +193,6 @@ class UserHandler extends DefaultHandler {
             author_interaction.setAuthorID(IDauthor);
             author_interactions.add(author_interaction);
             author_interaction = null;
-
             IDauthor ++;
             authors.add(author);
             author = null;
