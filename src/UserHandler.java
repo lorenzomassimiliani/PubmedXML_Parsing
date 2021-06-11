@@ -173,15 +173,17 @@ class UserHandler extends DefaultHandler {
         }
 
         if(qName.equals("PubmedArticle")) {
-            articles.add(article);
-            article = null;
             if(journal.getJournalID()  == null) {
                 journal.setJournalID("FAKE-" + journal.getTitle() + journal.getVolume() + journal.getIssue());
+                article.setJournalID(journal.getJournalID());
             }
             if(!journals.containsKey(journal.getJournalID())) {
                 journals.put(journal.getJournalID(), journal);
             }
+
             journal = null;
+            articles.add(article);
+            article = null;
         }
 
         if(qName.equals("Author")) {
