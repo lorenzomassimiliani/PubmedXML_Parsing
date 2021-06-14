@@ -7,20 +7,25 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.File;
 import java.io.FileWriter;
+import java.nio.file.Files;
 import java.util.List;
 
 import java.io.FileWriter;   // Import the FileWriter class
 import java.io.IOException;  // Import the IOException class to handle erro
 
-public class CreateQuerySQL {
-    public static void main(String[] args) {
+public class  CreateQuerySQL {
+
+
+    public static void main(String pathname) {
         try {
-            File inputFile = new File("src/ArticlesXML/pubmed21n0001.xml");
+            File inputFile = new File(pathname);
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser saxParser = factory.newSAXParser();
             UserHandler userhandler = new UserHandler();
             saxParser.parse(inputFile, userhandler);
 
+            File file = new File("querySQL.txt");
+            boolean result = Files.deleteIfExists(file.toPath());
             FileWriter querySQL = new FileWriter("querySQL.txt");
 
             List<Article> articles = userhandler.getArticles();
@@ -58,8 +63,6 @@ public class CreateQuerySQL {
                 sql = sql.replaceAll("'null'", "NULL") + "\n";
                 querySQL.write(sql);
             }
-
-
 
         } catch (Exception e) {
             e.printStackTrace();
